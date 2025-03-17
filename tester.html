@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 20%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: WhiteSmoke;
+  color: black;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 18px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 30%;
+}
+
+#Home {background-color: MintCream;}
+#Prerequisites {background-color: MintCream;}
+#Contact {background-color: MintCream;}
+#About {background-color: MintCream;}
+</style>
+</head>
+<body>
+<button class="tablink" onclick="openPage('Home', this, 'MintCream')"id="defaultOpen">Home</button>
+
+<button class="tablink" onclick="openPage('Prerequisites', this, 'MintCream')" >Prerequisites</button>
+
+
+<button class="tablink" onclick="openPage('Contact', this, 'MintCream')">Contact</button>
+<button class="tablink" onclick="openPage('About', this, 'MintCream')">About</button>
+
+<div id="Home" class="tabcontent">
+  <h3>Home</h3>
+  <p style="font-size:17px;font-family: Tahoma, sans-serif;"><b>Bioinformatics tutorial for detecting viruses in single-cell RNAseq data.</b></p>
+</div>
+
+<div id="Prerequisites" class="tabcontent">
+  <h3>Prerequisites</h3>
+  <p style="font-size:15px;font-family: Tahoma, sans-serif">This tutorial requires bash and R scripting and was done in Linux Mint OS 22.1 with 62.5GiB Memory/2048.4 GBHard Drive and Rstudio "Kousa Dogwood" Release (2025-02-02) for Ubuntu Jammy. </p> 
+</div>
+<div id="Contact" class="tabcontent">
+  <h3>Contact</h3>
+  <p style="font-size:18px;font-family: Tahoma, sans-serif">Send correspondence to: <a href="mailto: chakkapongburudpakdee@gmail.com">chakkapongburudpakdee@gmail.com</a></p> 
+</div>
+
+<div id="About" class="tabcontent">
+  <h3>About</h3>
+  <p style="font-size:14px;font-family: Tahoma, sans-serif">This viromics tutorial is for capturing viral transcript reads present in single-cell RNAseq data. The purpose of this  method is to study the virome effects in disease models.</p> 
+</div>
+
+<script>
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+   
+</body>
+<head>
+	<title>Bioinformatics tutorial for detecting viruses in single-cell RNAseq data</title>
+<style>
+textarea{
+   width: 100%;
+   height: 100%;
+}
+
+body {
+  font-family: "Times New Roman", Times, serif;
+}
+.all-browsers {
+	margin:0;
+	padding:5px;
+	background-color:GhostWhite;
+}
+.all-browsers > h1,.browser {
+	margin:10px;
+	padding:5px;
+}
+.browser {
+	background:Beige;
+}
+browser > h2, p {
+	margin:4px;
+	font-size:90%;
+}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</style>
+</head>
+<body>
+<img src="ai-generated-9083209.jpg" style="width:100%;">
+<h1 style="font-size:10px;">Image taken from:https://pixabay.com/illustrations/ai-generated-virus-bacteria-9083209/</h1>
+<section>
+<h1 style="font-size:14px;">March 15, 2025</h1>
+<h1 style="font-size:15px;font-family:Garamond, serif;">This method for detecting viral transcript reads in scRNAseq data was done with Mint OS but can be replicated using other Linux distributions. In the following steps, you will build a Mint Desktop and add CRAN, bioconductor, conda, and 10x cellranger package toolsets for processing transcriptomic data for gene expression and viral read abundances. I hope you will find this tutorial as interesting and useful as I have when writing this. </h1>
+<h1 style="font-size:1;">Building the Linux Operating System</h1>
+<p style="font-size:15px;">My Mint desktop was built as my main OS, however, you may consider building inside a virtual machine if you do not want Mint OS as your main operating system. One option would be using <a href="https://www.virtualbox.org/">Oracle virtual boxes.</a> You will need a USB drive for making bootable media if installing as the primary operating system. 
+</section>
+<br>
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Make a bootable USB drive and install Mint OS.</h1>
+	<article class="browser">
+<p>Download the <a href="https://linuxmint.com/">Mint iso image file.</a></p><br>
+	<p>Download balenaEtcher. Etcher will allow you to create a bootable USB drive for iso image file.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">wget https://github.com/balena-io/etcher/releases/download/v2.1.0/balenaEtcher-linux-x64-2.1.0.zip</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Unzip the downloaded file</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">unzip balenaEtcher-linux-x64-2.1.0.zip</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Insert USB drive into computer and open balenaEtcher. </p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">./balenaEtcher-linux-x64/balena-etcher</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div><br>
+<p>Follow prompts for creating the USB boot drive for the Mint operating system. </p><br>
+<p>Reboot computer and interrupt normal start-up by pressing Enter when prompted. Hit F12 to go into the boot menu and select the USB flash drive to boot from. Follow prompts from the Mint boot disk to install the OS. This step may vary depending on the computer you have.</p><br>
+
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+	
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Install R and Rstudio.</h1>
+	<article class="browser">
+	<p>Add the signing key (by Michael Rutter) for the R repos</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Verify the key.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Add the repo from CRAN. </p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/"</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Update the list of available packages and their versions. </p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">sudo apt-get update</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Install dependencies for R. </p>
+    <div >
+        <textarea id="myInput" cols="100" rows="4">wget http://archive.ubuntu.com/ubuntu/pool/main/i/icu/libicu70_70.1-2_amd64.deb && sudo dpkg -i libicu70_70.1-2_amd64.deb && wget http://archive.ubuntu.com/ubuntu/pool/main/t/tiff/libtiff5_4.3.0-6_amd64.deb && sudo dpkg -i libtiff5_4.3.0-6_amd64.deb </textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Install R base. </p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">sudo apt-get install r-base-dev</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Download <a href="https://posit.co/download/rstudio-desktop/">Rstudio.</a></p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2024.12.1-563-amd64.deb</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Install RStudio. </p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">sudo dpkg -i rstudio-2024.12.1-563-amd64.deb</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>If there are dependency errors. Use the following command to fix.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">sudo apt --fix-broken install</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Use terminal with sudo priviledges in R.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">sudo R</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Update R packages and install bioconductor in terminal.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="5">update.packages(ask = FALSE, checkBuilt = TRUE)
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install(version = "3.20")</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div><br>
+
+<p>R base, Rstudio, and Bioconductor are now installed and ready. </p><br>
+
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Install and configure Anaconda.</h1>
+	<article class="browser">
+	<p>Download <a href="https://www.anaconda.com/download">Anaconda.</a></p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">wget https://repo.anaconda.com/archive/Anaconda3-2024.06-1-Linux-x86_64.sh</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Install Anaconda.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">bash Anaconda3-2024.06-1-Linux-x86_64.sh</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Add conda forge channel.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">conda config --add channels conda-forge</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Add  bioconda channel.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">conda config --add channels bioconda</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Update conda.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">conda update -n base -c defaults conda</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div><br>
+<p>Be sure to close and reopen the terminal after the conda install. This will ensure the conda command is functional.</p><br>
+
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Install Cellranger</h1>
+	<article class="browser">
+	<p>Download <a href="https://www.10xgenomics.com/support/software/cell-ranger/downloads/eula?closeUrl=%2Fsupport%2Fsoftware%2Fcell-ranger&lastTouchOfferName=Cell%20Ranger&lastTouchOfferType=Software%20Download&product=chromium&redirectUrl=%2Fsupport%2Fsoftware%2Fcell-ranger%2Fdownloads">Cellranger.</a> For convenience, download in home directory.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="6">wget -O cellranger-9.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-9.0.1.tar.gz?Expires=1742121868&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Lmy7gkvguAd-cU1FI5H8rDfedohLRaSbGLWwxI7liK3ac3c3Mw6uDQdSyvAkNh~8w9Cgu3UmYx8QLMd0~ODTOZsyjzj9MnOnqR1Cuderbbf1LNMtzdyvyTcKGlSEpOjCMvwwL3y-CFNBGOnTRhAFrLuRNUW-lNH8vyXi4ZXUgfgwTZfgHd9~Jqv3YBhjELb4cLkXVOt9pow3dFFJs3vl~IbY0u0lbfOfMDARlnERYgd~CjIqAk0RMO2CK9DIdovLSdd4Zga36jpXs20GePRQG9cT6rMDl2ZbmqSazuyKaG-1nrmF8iZZRxUv3ax6iMY6sp96JmmlYhGtssoO40cayg__"</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Unpack download.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">tar -xzvf cellranger-9.0.1.tar.gz</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>In home directory, prepend the Cell Ranger directory to your $PATH and add to .bashrc .</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">echo 'export PATH="/home/<your_user>/cellranger-9.0.1/bin:$PATH"' >> ~/.bashrc</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div><br>
+<p>Cellranger is now installed and ready.</p><br>
+
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+
+<p style="font-size:15px;">Now that we have most of the tools for processing the raw data, we can look at the summary of the single-cell RNAseq experiment we will be analyzing in this tutorial. The paper associated with the dataset is as follows:</p>
+<p style="font-size:13px;">Schwartz M, Shnayder M, Nachshon A, Arazi T et al. Molecular characterization of human cytomegalovirus infection with single-cell transcriptomics. Nat Microbiol 2023 Mar;8(3):455-468. PMID: 36732471.</p>
+<p style="font-size:15px;">In this <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE189581">study,</a> the susceptibility of macrophages to human cytomegalovirus (HCMV) infections were found to be increased for productive infections. Furthermore, non-productive macrophages could reactivate, making them potential latent virus reservoirs. We will test whether the HCMV viral transcript reads are indeed found in BAL macrophages using the scRNAseq data.</p>
+
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Download fastq files for experimental conditions.</h1>
+	<article class="browser">
+<p>Install sra-tools for downloading fastq files from the NCBI Gene Expression Omnibus database.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">conda install bioconda::sra-tools</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Install pigz for gzipping the fastq files to save memory space.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">conda install conda-forge::pigz</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Make a directory for the experiment where we will be downloading the files into.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">mkdir hcmv_macrophages && cd hcmv_macrophages</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Retrieve HCMV infected 20hpi samples. Now is a good time to grab a cup of coffee.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">prefetch SRR21629288 --max-size 40gb</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Rename HCMV infected 20hpi directory.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">mv SRR21629288 SRR21629288_20hpi</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Split HCMV infected 20hpi fastq files.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">cd SRR21629288_20hpi && fastq-dump --split-files SRR21629288.sra</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Compress HCMV infected 20hpi files and exit out of the directory.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">pigz SRR21629288_1.fastq SRR21629288_2.fastq && cd ..</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Retrieve HCMV infected 70hpi samples. Get some more coffee and come back.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">prefetch SRR21629289 --max-size 40gb</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Rename HCMV infected 70hpi directory.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">mv SRR21629289 SRR21629289_70hpi</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Split HCMV infected 70hpi fastq files.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">cd SRR21629289_70hpi && fastq-dump --split-files SRR21629289.sra</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Compress HCMV infected 70hpi files and exit out of the directory.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1" >pigz SRR21629289_1.fastq SRR21629289_2.fastq && cd ..</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Rename HCMV infected 20hpi file names for cellranger pipeline and exit directory.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="3" >cd SRR21629288_20hpi && mv SRR21629288_1.fastq.gz sample_S1_L001_R1_001.fastq.gz && mv SRR21629288_2.fastq.gz sample_S1_L001_R2_001.fastq.gz && cd ..</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Rename HCMV infected 70hpi file names for cellranger pipeline and exit to home directory.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="3" >cd SRR21629289_70hpi && mv SRR21629289_1.fastq.gz sample_S1_L001_R1_001.fastq.gz && mv SRR21629289_2.fastq.gz sample_S1_L001_R2_001.fastq.gz && cd</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div><br>
+<p>The fastq files are now ready.</p>
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Download and process the hg38 human assembly fasta and gtf files. Do these steps in the hcmv_macrophages directory for convenience.</h1>
+	<article class="browser">
+<p>Download and unzip the hg38 assembly fasta file.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="3">wget https://ftp.ensembl.org/pub/release-113/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz && gunzip Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Download and unzip the hg38 gtf file.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="2">wget https://ftp.ensembl.org/pub/release-113/gtf/homo_sapiens/Homo_sapiens.GRCh38.113.gtf.gz && gunzip Homo_sapiens.GRCh38.113.gtf.gz</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Filter the gtf file for protein coding sequences.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="2">cellranger mkgtf Homo_sapiens.GRCh38.113.gtf Homo_sapiens.GRCh38.113.filtered.gtf --attribute=gene_biotype:protein_coding</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>The hg38 fastq and gtf files are now ready.</p><br>
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+<p>Now we will need the coding sequences available on the NCBI Nucleotide webpage for the <a href="https://www.ncbi.nlm.nih.gov/nuccore/EF999921.1/">Human herpesvirus 5 strain TB40/E clone TB40-BAC4, complete sequence</a> (GenBank: EF999921.1). Navigate to the "Send to:" tab and click to highlight the options for downloading. Select the "Coding Sequences" and select the "FASTA Nucleotide" option for Format. Hit Create File to download the CDS sequence fasta file. This will download the "sequence.txt" file. For your convenience, copy and paste this file into the hcmv_macrophages directory. Once finished, we will be able to format the "sequence.txt" fasta file of use in the Cellranger pipeline.</p><br>
+<p>You will need to open the sequence.txt file in a text editor of your choice and modify two lines before proceeding.<br>Find "[protein=UL80.5]" and replace with [protein=UL80_5]. Next, Find [protein=truncated UL141] and replace with [protein=truncated_UL141].<br>Save and exit out of the text editor. The sequence file is now ready.  
+
+ <article class="all-browsers">
+	<h1 style="font-size:15px;">Get the sizes of sequences in the sequences.txt fasta file.</h1>
+	<article class="browser">
+<p>Install pyfaidx using pip.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">pip install pyfaidx</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Get sequence sizes.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">faidx sequence.txt -i chromsizes > sizes.genome</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+</article>
+ <article class="all-browsers">
+	<h1 style="font-size:15px;">Make a custom gtf file with the Human herpesvirus 5 strain TB40/E clone TB40-BAC4, complete sequence for use in Cellranger.</h1>
+	<article class="browser">
+<p>Install dependencies in terminal.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="3">sudo apt-get install libcurl4-openssl-dev libfontconfig1-dev libxml2-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Install packages in Rstudio. Make a new R script file named custom_gtf.R. Make sure to save this file in the hcmv_macrophages directory.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="2">install.packages('tidyr')
+install.packages('tidyverse')</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Make the custom gtf file in Rstudio.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="70">library(tidyr)
+library(tidyverse)
+library(dplyr)
+#---read in fasta file to make gtf
+file<-read.delim('/home/<your_user>/hcmv_macrophages/sequence.txt',
+                 header = FALSE,sep = ' ')
+selected_rows <- file[grep(">", file$V1), ]
+contig_names <- gsub('>','',selected_rows$V1)
+contig_names
+#---make sure there are no duplicated contig names
+duplicated(contig_names)
+#---get protein names and use as gene names
+gene_names<-gsub(".*[=]([^.]+)[]].*", "\\1",selected_rows$V2)
+gene_names
+duplicated(gene_names)
+#----if duplicate genes use
+df <- data.frame("GENES"=c(gene_names)) 
+gene_names<-df |> 
+  mutate(dupl = if_else(duplicated(GENES), 1, 0)) |> 
+  group_by(GENES) |> 
+  mutate(dupl = cumsum(dupl),
+         GENES = paste(GENES, dupl, sep = "-")) |> 
+  select(-dupl)
+gene_names<-gene_names$GENES
+gene_names
+duplicated(gene_names)
+#---tag the gene names with HCMV
+gene_names<-paste0(gene_names, "-HCMV")
+gene_names
+#--change all underscores to dashes
+gene_names <- sub("_", "-", gene_names)
+gene_names
+#---save a copy of the gene names in csv format
+write.csv(gene_names,file='/home/<your_user>/hcmv_macrophages/HCMV_genes.csv')
+#---read in sequence sizes
+file2<-read.delim('/home/em/hcmv_macrophages/sizes.genome',
+                  header = FALSE)
+gene_sizes<-file2$V2
+gene_sizes
+#---make gtf
+gene_names_edit<-paste0('"',gene_names,'";')
+gene_names_edit
+genes_transcripts<-cbind('gene_id',gene_names_edit,'transcript_id',gene_names_edit,
+                         'gene_name',gene_names_edit,'gene_biotype "protein_coding";')
+genes_transcripts<-data.frame(genes_transcripts)
+genes_transcripts_final <- paste(genes_transcripts$V1,
+                                 genes_transcripts$gene_names_edit,
+                                 genes_transcripts$V3,
+                                 genes_transcripts$gene_names_edit.1,
+                                 genes_transcripts$V5,
+                                 genes_transcripts$gene_names_edit.2,
+                                 genes_transcripts$V7)
+head(genes_transcripts_final)
+final<-cbind(contig_names,
+             'unknown',
+             'exon',
+             1,
+             gene_sizes,
+             '.',
+             '+',
+             '.',
+             genes_transcripts_final)
+final<-data.frame(final)
+head(final)
+#---write custom gtf file
+write.table(data.frame(final),'/home/<your_user>/hcmv_macrophages/HCMV.gtf',
+            sep="\t",
+            row.names=FALSE,
+            col.names = FALSE,
+            quote = FALSE)</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>The custom gtf file is now ready for Cellranger.</p><br>
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Make a transcriptome reference with the hg38 assembly and the HCMV CDS sequences.</h1>
+	<article class="browser">
+<p>Concatenate the hg38 and HCMV fasta files.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">cat Homo_sapiens.GRCh38.dna.primary_assembly.fa sequence.txt > final.fa
+</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Concatenate the hg38 and HCMV gtf files.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">cat Homo_sapiens.GRCh38.113.filtered.gtf HCMV.gtf > final.gtf</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Make custom transcriptome reference.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="2">cellranger mkref --genome=hg38_hcmv_ref --fasta=final.fa --genes=final.gtf</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>The custom transcriptome reference for Cellranger is now ready.</p><br>
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Align the fastq files with the custom transcriptome reference in Cellranger.</h1>
+	<article class="browser">
+<p>Use Cellranger count to align the HCMV 20hpi fastq files.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="2">cellranger count --id=SRR21629288_20hpi_cts --fastqs=SRR21629288_20hpi --sample=sample --transcriptome=hg38_hcmv_ref --create-bam true
+</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Use Cellranger count to align the HCMV 70hpi fastq files.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="2">cellranger count --id=SRR21629289_70hpi_cts --fastqs=SRR21629289_70hpi --sample=sample --transcriptome=hg38_hcmv_ref --create-bam true
+</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>The count files for the HCMV infected BAL cell experiments are ready for analysis in R.</p><br>
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Preprocess the HCMV infected BAL cell count files in R.</h1>
+	<article class="browser">
+<p>Install dependency for R packages in terminal.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="1">sudo apt-get install libnode-dev</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Install R packages for analysis in Rstudio.</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="6">install.packages('remotes')
+remotes::install_github("satijalab/seurat", "seurat5", quiet = FALSE)
+BiocManager::install('biomaRt')
+BiocManager::install('org.Hs.eg.db')
+BiocManager::install('SingleR')
+BiocManager::install('clusterProfiler')
+BiocManager::install('SingleCellExperiment')</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>Make a new R script with a filename "HCMV_preprocessing.R" and save in the hcmv_macrophages directory. Process the count files into an RDS file for further analysis. </p>
+    <div >
+        <textarea id="myInput" cols="100" rows="128">library(Seurat)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(ggridges)
+library(biomaRt)
+library(celldex)
+library(org.Hs.eg.db)
+library(SingleR)
+#---enter all count files and make into Seurat objects 
+setwd('/home/<your_user>/hcmv_macrophages/SRR21629288_20hpi_cts/outs/raw_feature_bc_matrix')
+barcodes_path <- 'barcodes.tsv.gz'
+features_path <- 'features.tsv.gz'
+matrix_path <- 'matrix.mtx.gz'
+matrix <- ReadMtx(mtx= matrix_path, features = features_path, cells= barcodes_path)
+data <- CreateSeuratObject(counts=matrix,
+                           min.cells=1,
+                           min.features=200,
+                           project = '20hpi')
+setwd('/home/<your_user>/hcmv_macrophages/SRR21629289_70hpi_cts/outs/raw_feature_bc_matrix')
+barcodes_path <- 'barcodes.tsv.gz'
+features_path <- 'features.tsv.gz'
+matrix_path <- 'matrix.mtx.gz'
+matrix <- ReadMtx(mtx= matrix_path, features = features_path, cells= barcodes_path)
+data2 <- CreateSeuratObject(counts=matrix,
+                            min.cells=1,
+                            min.features=200,
+                            project = '70hpi')
+#---merge all seurat objects
+data<-merge(data,
+            y=c(data2))
+dim(data)
+table(Idents(data))
+#---subset cells with 200 < features < 9000 and with 15% or less mitochondrial genes 
+data[["percent.mt"]] <- PercentageFeatureSet(data, pattern = "^MT-")
+VlnPlot(data, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol=3)
+data <- subset(data, subset = nFeature_RNA > 200 & nFeature_RNA < 9000 & percent.mt <15)
+VlnPlot(data, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol=3)
+FeatureScatter(data, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + geom_smooth()
+#--normalize object
+data <- NormalizeData(data)
+#---find variable genes in object
+data <- FindVariableFeatures(data, selection.method = "vst", nfeatures = 2000)
+top1000 <- head(VariableFeatures(data), 1000)
+head(top1000)
+gc()
+plot1 <- VariableFeaturePlot(data)
+plot1
+all.genes <- rownames(data)
+head(all.genes)
+#---scale object
+data <- ScaleData(data, features = all.genes)
+#---run PCA
+data <- RunPCA(data, features = VariableFeatures(object = data))
+gc()
+DimHeatmap(data, dims = 1:15, cells = 500, balanced = T)
+ElbowPlot(data)
+#---run UMAP
+data <- RunUMAP(data, dims = 1:15)
+data <-JoinLayers(data)
+head(data@meta.data)
+#--auto annotate cell subsets
+surveyReferences()
+searchReferences('human')
+ref <- fetchReference("blueprint_encode", "2024-02-26")
+ref
+#--- convert seurat object into single cell experiment object 
+rna.sce <- as.SingleCellExperiment(DietSeurat(data))
+rna.sce
+#---get general celltype annotations
+ref.main <- SingleR(test = rna.sce,
+                    assay.type.test = 1,
+                    ref = ref,
+                    labels = ref$label.main)
+gc()
+#---get fine celltype annotations
+ref.fine <- SingleR(test = rna.sce,
+                    assay.type.test = 1,
+                    ref = ref,
+                    labels = ref$label.fine)
+table(ref.main$pruned.labels)
+table(ref.fine$pruned.labels)
+head(data@meta.data)
+#---add general celltypes to metadata
+data@meta.data$gen_celltype <- ref.main$pruned.labels
+#---add fine celltypes to metadata
+data@meta.data$fine_celltype <- ref.fine$pruned.labels
+head(data@meta.data)
+#---set object identities to gen celltype
+data <- SetIdent(data, value = "gen_celltype")
+table(Idents(data))
+#---subset object by types
+data<-subset(x = data, idents = c('CD8+ T-cells','DC','Macrophages','CD4+ T-cells','Monocytes','B-cells','NK cells','HSC','Epithelial cells','Melanocytes','Erythrocytes','Neutrophils','Adipocytes'),
+             invert = FALSE)
+table(Idents(data))
+#---visualize final data
+p1<-DimPlot(data,
+            reduction = 'umap',
+            label=TRUE,
+            label.size =4,
+            label.box = FALSE,
+            raster=FALSE,
+            pt.size = 0.5,
+            seed=1,
+            cols.highlight = c('grey'),
+            dims = c(1,2),
+            repel = TRUE,
+            group.by = 'orig.ident')
+p2<-DimPlot(data,
+            reduction = 'umap',
+            label=TRUE,
+            label.size =4,
+            label.box = FALSE,
+            raster=FALSE,
+            pt.size = 0.5,
+            seed=1,
+            cols.highlight = c('grey'),
+            dims = c(1,2),
+            repel = TRUE,
+            group.by = 'gen_celltype')
+p1+p2
+#---write Seurat object to rds file 
+SaveSeuratRds(data,
+              file='/home/<your_user>/hcmv_macrophages/HCMV_exp.rds')</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>The processed RDS file is now saved and ready for further analysis. This step will save time if doing repeated analysis on the data files.</p><br>
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+<p>Here are the UMAPs  from the processed data in the saved RDS files. On the left are the cells split by hours post infection and on the right are the cells split by types.</p>
+<img src="Rplot1.png" style="width:100%;">
+
+
+<article class="all-browsers">
+	<h1 style="font-size:15px;">Analyze RDS file for HCMV transcript sequence reads.</h1>
+	<article class="browser">
+<p>Open Rstudio and save a new R script as "HCMV_analysis.R".</p>
+    <div >
+        <textarea id="myInput" cols="100" rows="110">library(Seurat)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(ggridges)
+library(biomaRt)
+library(celldex)
+library(org.Hs.eg.db)
+library(SingleR)
+library(plotly)
+library(htmlwidgets)
+library(ReactomePA)
+library(DOSE)
+library(clusterProfiler)
+#---read in RDS file
+data<-readRDS(file='/home/<your_user>/hcmv_macrophages/HCMV_exp.rds')
+#---read in HCMV transcript names csv
+hcmv<-read.csv('/home/<your_user>/hcmv_macrophages/HCMV_genes.csv')
+hcmv<-hcmv$x
+hcmv<-FetchData(data,vars = c('ident',hcmv),layer = 'counts')
+hcmv<-colnames(hcmv)[-1]
+cat('All viral sequence reads detected')
+hcmv
+#---set identities by timepoint
+data <- SetIdent(data, value = "orig.ident")
+table(Idents(data))
+#---downsample to 15,000cells per condition
+data<-subset(data,
+             downsample=15000)
+table(Idents(data))
+#---select for viral positive cells
+viral_pos_cells<-subset(data, subset = `US7-0-HCMV`>0|`US8-0-HCMV`>0|`US9-0-HCMV`>0|`US10-0-HCMV`>0|`US11-0-HCMV`>0|`US12-0-HCMV`>0|`US13-0-HCMV`>0|`US14-0-HCMV`>0|`US15-0-HCMV`>0|`US16-0-HCMV`>0|`US17-0-HCMV`>0|`US18-0-HCMV`>0|`US19-0-HCMV`>0|`US20-0-HCMV`>0|`US21-0-HCMV`>0|`US22-0-HCMV`>0|`US23-0-HCMV`>0|`US24-0-HCMV`>0|`US26-0-HCMV`>0|`US27-0-HCMV`>0|`US28-0-HCMV`>0|`US29-0-HCMV`>0|`US30-0-HCMV`>0|`US31-0-HCMV`>0|`US32-0-HCMV`>0|`US33-0-HCMV`>0|`US34-0-HCMV`>0|`US34A-0-HCMV`>0|`RL1-0-HCMV`>0|`RL10-0-HCMV`>0|`RL11-0-HCMV`>0|`RL12-0-HCMV`>0|`RL13/TRL14-0-HCMV`>0|`UL1-0-HCMV`>0|`UL4-0-HCMV`>0|`UL5-0-HCMV`>0|`UL6-0-HCMV`>0|`UL7-0-HCMV`>0|`UL8-0-HCMV`>0|`UL9-0-HCMV`>0|`UL10-0-HCMV`>0|`UL11-0-HCMV`>0|`UL12-0-HCMV`>0|`UL13-0-HCMV`>0|`UL14-0-HCMV`>0|`UL15A-0-HCMV`>0|`UL16-0-HCMV`>0|`UL17-0-HCMV`>0|`UL18-0-HCMV`>0|`UL19-0-HCMV`>0|`UL20-0-HCMV`>0|`UL21A-0-HCMV`>0|`UL22A-0-HCMV`>0|`UL23-0-HCMV`>0|`UL24-0-HCMV`>0|`UL25-0-HCMV`>0|`UL26-0-HCMV`>0|`UL27-0-HCMV`>0|`UL28-0-HCMV`>0|`UL29-0-HCMV`>0|`UL30-0-HCMV`>0|`UL31-0-HCMV`>0|`UL32-0-HCMV`>0|`UL33-0-HCMV`>0|`UL34-0-HCMV`>0|`UL35-0-HCMV`>0|`UL36-0-HCMV`>0|`UL37-0-HCMV`>0|`UL38-0-HCMV`>0|`vMIA-0-HCMV`>0|`UL40-0-HCMV`>0|`UL41A-0-HCMV`>0|`UL42-0-HCMV`>0|`UL43-0-HCMV`>0|`UL44-0-HCMV`>0|`UL44-1-HCMV`>0|`UL46-0-HCMV`>0|`UL47-0-HCMV`>0|`UL48-0-HCMV`>0|`UL48A-0-HCMV`>0|`UL49-0-HCMV`>0|`UL50-0-HCMV`>0|`UL51-0-HCMV`>0|`UL52-0-HCMV`>0|`UL53-0-HCMV`>0|`UL54-0-HCMV`>0|`UL55-0-HCMV`>0|`UL56-0-HCMV`>0|`UL57-0-HCMV`>0|`UL59-0-HCMV`>0|`UL60-0-HCMV`>0|`UL69-0-HCMV`>0|`UL70-0-HCMV`>0|`UL71-0-HCMV`>0|`UL72-0-HCMV`>0|`UL73-0-HCMV`>0|`UL74-0-HCMV`>0|`UL75-0-HCMV`>0|`UL76-0-HCMV`>0|`UL77-0-HCMV`>0|`UL78-0-HCMV`>0|`UL79-0-HCMV`>0|`UL80-0-HCMV`>0|`UL80-5-0-HCMV`>0|`UL82-0-HCMV`>0|`UL83-0-HCMV`>0|`UL84-0-HCMV`>0|`UL85-0-HCMV`>0|`UL86-0-HCMV`>0|`UL87-0-HCMV`>0|`UL88-0-HCMV`>0|`UL89-0-HCMV`>0|`UL90-0-HCMV`>0|`UL91-0-HCMV`>0|`UL92-0-HCMV`>0|`UL93-0-HCMV`>0|`UL94-0-HCMV`>0|`UL95-0-HCMV`>0|`UL96-0-HCMV`>0|`UL97-0-HCMV`>0|`UL98-0-HCMV`>0|`UL99-0-HCMV`>0|`UL100-0-HCMV`>0|`UL102-0-HCMV`>0|`UL103-0-HCMV`>0|`UL104-0-HCMV`>0|`UL105-0-HCMV`>0|`UL112-0-HCMV`>0|`UL114-0-HCMV`>0|`UL115-0-HCMV`>0|`UL116-0-HCMV`>0|`UL117-0-HCMV`>0|`UL119-0-HCMV`>0|`UL120-0-HCMV`>0|`UL121-0-HCMV`>0|`UL122-0-HCMV`>0|`UL123-0-HCMV`>0|`UL124-0-HCMV`>0|`UL127-0-HCMV`>0|`UL128-0-HCMV`>0|`UL130-0-HCMV`>0|`UL131A-0-HCMV`>0|`UL132-0-HCMV`>0|`UL148-0-HCMV`>0|`UL147A-0-HCMV`>0|`UL147-0-HCMV`>0|`UL146-0-HCMV`>0|`UL145-0-HCMV`>0|`UL144-0-HCMV`>0|`UL142-0-HCMV`>0|`truncated-UL141-0-HCMV`>0|`UL140-0-HCMV`>0|`UL139-0-HCMV`>0|`UL138-0-HCMV`>0|`UL137-0-HCMV`>0|`UL136-0-HCMV`>0|`UL135-0-HCMV`>0|`UL134-0-HCMV`>0|`UL133-0-HCMV`>0|`UL148A-0-HCMV`>0|`UL148C-0-HCMV`>0|`UL148D-0-HCMV`>0|`UL149-0-HCMV`>0|`UL150-0-HCMV`>0)
+viral_pos_cells <- SetIdent(viral_pos_cells, value = "gen_celltype")
+
+#---find HCMV transcripts with logfc >= 1.5 
+transcripts<-FindMarkers(viral_pos_cells,
+            features = c(hcmv),
+            test.use='bimod',
+            ident.1 = 'Macrophages',
+            ident.2 = 'CD4+ T-cells',
+            logfc.threshold = 1.5)
+transcripts<-rownames(transcripts)
+transcripts
+DoHeatmap(viral_pos_cells,
+          features = c('PTPRC','CD14','PDCD1LG2','CD274',transcripts),
+          size = 6)
+viral_pos_cells <- SetIdent(viral_pos_cells, value = "orig.ident")
+DoHeatmap(viral_pos_cells,
+          features = c('PTPRC','CD14','PDCD1LG2','CD274',transcripts),
+          size = 6)
+VlnPlot(viral_pos_cells,
+        features = c('US10-0-HCMV','US34A-0-HCMV'),
+        pt.size = 5,
+        group.by = c('gen_celltype'))
+VlnPlot(viral_pos_cells,
+        features = c('UL13-0-HCMV','UL40-0-HCMV'),
+        pt.size = 5,
+        group.by = c('gen_celltype'))
+#---split into US34A+ ad US34A- cells
+data$viral.groups <- 'viral.pos'
+data$viral.groups[WhichCells(data, expression= `US34A-0-HCMV` < 0.1)] <- 'viral.neg'
+DimPlot(data, reduction = 'pca',split.by = 'viral.groups')
+VlnPlot(data,
+        features = c('US34A-0-HCMV'),
+        group.by = 'viral.groups')
+head(data@meta.data)
+data <- SetIdent(data, value = "viral.groups")
+table(Idents(data))
+data<-subset(data,
+             downsample=664)
+table(Idents(data))
+all.genes<-row.names(data)
+#---get upregulated differentially expressed genes in US34A+ cells
+DEG<-FindMarkers(data,
+            features=c(all.genes),
+            ident.1 = 'viral.pos',
+            test.use='bimod',
+            logfc.threshold=0.7,
+            only.pos=TRUE)
+DoHeatmap(data,
+          features = c('PTPRC',row.names(DEG)[1:200]),
+          size = 6)
+Sys.setenv("http_proxy"="http://my.proxy.org:9999")
+ensembl=useMart("ensembl")
+ensembl=useDataset("hsapiens_gene_ensembl",
+                   mart = ensembl)
+geneid <- row.names(DEG)
+head(geneid)
+
+genes <-getBM(attributes = c('entrezgene_id','external_gene_name'),
+              filters = 'external_gene_name',
+              values = geneid,
+              mart = ensembl)
+head(genes)
+go <- enrichGO(gene = genes$entrezgene_id,
+               OrgDb = org.Hs.eg.db,
+               ont = "BP")
+#---Gene ontology biological process annotations
+dotplot(go,
+        x='Count',
+        color= 'qvalue',
+        size= NULL,
+        split=NULL,
+        font.size=14,
+        title='GO:Biological Process:Upregulated genes in US34A+ cells',
+        showCategory=10,
+        label_format=50)
+</textarea>
+        <button onclick="myFunction(this.parentNode.children[0])">Copy code</button>
+    </div>
+<p>As you can see, the HCMV transcripts are detectable in these scRNAseq fastq files.</p><br>
+    <script>
+    function myFunction(previousSibling) {
+
+      var copyText = previousSibling;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied: " + copyText.value);
+    }
+    </script>
+	</article>
+
+<p>HCMV transcripts are present in BAL macrophages.</p>
+<img src="celltypes.png" style="width:50%;">
+
+<p>HCMV transcripts increased at 70hpi.</p>
+<img src="tmpts.png" style="width:50%;">
+
+<p>HCMV US10 and US34A transcripts are present in BAL macrophages.</p>
+<img src="us10_us34a.png" style="width:50%;">
+
+<p>HCMV UL13 and UL40 transcripts are present in BAL macrophages.</p>
+<img src="UL13_UL40.png" style="width:50%;">
+
+<p>Gene Ontology Baiological Process annotations for upregulated genes in US34A+ cells compared with US34A- cells.</p>
+<img src="go.png" style="width:50%;">
+<br>
+<br>
+<p>With this tutorial, you now have a Linux Mint bioinformatics desktop which can be used to determine the presence of viral transcript reads in scRNAseq datasets. I hope you find this method useful.<br> Written by Chakkapong Burudpakdee</p><br>
+<p>March 15, 2025</p>
+
+</article>
+<br>
+<footer>
+<p></p><br>	
+</footer>
+</body>
+</html> 
